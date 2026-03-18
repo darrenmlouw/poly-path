@@ -1,7 +1,5 @@
-import { useCallback, useRef } from "react";
 import { useAppState } from "../state/AppState";
 import { SHAPES } from "../utils/presets";
-import { parseFile } from "../utils/parsers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +16,6 @@ import {
 import {
   Box,
   RotateCcw,
-  Upload,
   Grid3X3,
   MapPin,
   Route,
@@ -31,7 +28,6 @@ export default function ControlPanel() {
     shapeParams,
     setShapeParam,
     currentShape,
-    setCustomPoly,
     polyhedron,
     gridSpacing,
     setGridSpacing,
@@ -45,27 +41,6 @@ export default function ControlPanel() {
     pointB,
     path,
   } = useAppState();
-
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const handleFile = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const data = parseFile(reader.result as string, file.name);
-          setCustomPoly(data);
-          resetPoints();
-        } catch (err) {
-          alert(`Failed to parse file: ${(err as Error).message}`);
-        }
-      };
-      reader.readAsText(file);
-    },
-    [setCustomPoly, resetPoints]
-  );
 
   const pathLength =
     path.length >= 2
@@ -184,27 +159,6 @@ export default function ControlPanel() {
           <p className="text-[11px] text-muted-foreground mt-1 px-2">
             Grid cell size in units. Quads use a square grid; other faces use barycentric.
           </p>
-        </SidebarGroupContent>
-      </SidebarGroup>
-
-      <Separator />
-
-      {/* File upload */}
-      <SidebarGroup>
-        <SidebarGroupLabel>
-          <Upload className="h-3.5 w-3.5 mr-2" />
-          Import
-        </SidebarGroupLabel>
-        <SidebarGroupContent>
-          <div className="px-2">
-            <Input
-              ref={fileRef}
-              type="file"
-              accept=".json,.obj"
-              onChange={handleFile}
-              className="h-8 text-xs cursor-pointer file:text-xs file:font-medium bg-muted/50"
-            />
-          </div>
         </SidebarGroupContent>
       </SidebarGroup>
 

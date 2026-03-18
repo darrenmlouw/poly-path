@@ -54,12 +54,3 @@ export function parseOBJ(text: string): PolyhedronData {
 
   return { vertices, faces };
 }
-
-/**
- * Detect format and parse.
- */
-export function parseFile(text: string, filename: string): PolyhedronData {
-  const ext = filename.split(".").pop()?.toLowerCase();
-  if (ext === "obj") return parseOBJ(text);
-  return parseJSON(text);
-}
