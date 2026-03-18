@@ -109,10 +109,11 @@ export default function ControlPanel() {
                   value={shapeParams[param.key] ?? param.defaultValue}
                   onChange={(e) => {
                     const v = Number(e.target.value);
-                    if (v > 0) {
-                      setShapeParam(param.key, v);
-                      resetPoints();
-                    }
+                    if (!Number.isFinite(v)) return;
+                    // Clamp to declared bounds to avoid extremely large values
+                    const clamped = Math.max(param.min, Math.min(param.max, v));
+                    setShapeParam(param.key, clamped);
+                    resetPoints();
                   }}
                   className="h-8 text-xs bg-muted/50"
                 />

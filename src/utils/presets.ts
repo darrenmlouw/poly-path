@@ -174,9 +174,9 @@ export const SHAPES: ShapeType[] = [
   {
     name: "Cuboid",
     params: [
-      { key: "width", label: "W", defaultValue: 12, min: 0.5, max: 200, step: 0.5 },
-      { key: "height", label: "H", defaultValue: 12, min: 0.5, max: 200, step: 0.5 },
-      { key: "depth", label: "D", defaultValue: 30, min: 0.5, max: 200, step: 0.5 },
+      { key: "width", label: "W", defaultValue: 10, min: 0.5, max: 200, step: 0.5 },
+      { key: "height", label: "H", defaultValue: 10, min: 0.5, max: 200, step: 0.5 },
+      { key: "depth", label: "D", defaultValue: 20, min: 0.5, max: 200, step: 0.5 },
     ],
     generate: (v) => makeBox(v.width, v.height, v.depth),
   },
